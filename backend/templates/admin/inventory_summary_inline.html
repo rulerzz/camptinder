@@ -1,0 +1,35 @@
+{% load i18n %}
+
+<div class="inventory-summary">
+    <h2>{% trans "Inventory Summary" %}</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>{% trans "Product" %}</th>
+                <th>{% trans "Type" %}</th>
+                <th>{% trans "Price" %}</th>
+                <th>{% trans "Available" %}</th>
+                <th>{% trans "Total" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% with inventory=original.get_detailed_inventory %}
+                {% if inventory %}
+                    {% for item in inventory %}
+                        <tr>
+                            <td>{{ item.product__name }}</td>
+                            <td>{{ item.product__type__name }}</td>
+                            <td>${{ item.product__price }}</td>
+                            <td>{{ item.available }}</td>
+                            <td>{{ item.total }}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="5">{% trans "No inventory data available" %}</td>
+                    </tr>
+                {% endif %}
+            {% endwith %}
+        </tbody>
+    </table>
+</div>

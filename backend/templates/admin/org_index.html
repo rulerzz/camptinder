@@ -1,0 +1,22 @@
+{% extends "admin/index.html" %}
+{% load i18n %}
+
+{% block content %}
+<div id="org-info" style="margin-bottom: 20px; padding: 15px; background-color: #f8f8f8; border-radius: 5px; border: 1px solid #ddd;">
+    <h2>{% trans "Your Organizations" %}</h2>
+    <ul>
+    {% for membership in request.user.organization_memberships.all %}
+        {% if membership.is_active %}
+        <li style="margin-bottom: 10px;">
+            <strong>{{ membership.organization.name }}</strong> 
+            <span style="color: #666; margin-left: 10px;">({{ membership.get_role_display }})</span>
+        </li>
+        {% endif %}
+    {% empty %}
+        <li>{% trans "You are not a member of any organization." %}</li>
+    {% endfor %}
+    </ul>
+</div>
+
+{{ block.super }}
+{% endblock %}
